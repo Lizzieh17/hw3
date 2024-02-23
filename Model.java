@@ -12,13 +12,18 @@ public class Model
 
 	public Model()
 	{
-		Wall wall = new Wall(250, 300, 200, 100);
+		//Wall wall = new Wall(250, 300, 200, 100);
 		walls = new ArrayList<Wall>();
-		walls.add(wall);
+		//walls.add(wall);
 	}
 
 	public ArrayList<Wall> getWalls(){
 		return walls;
+	}
+
+	public void hello()
+	{
+		System.out.println("Hello");
 	}
 	// public void unmarshal(Json ob){
 

@@ -32,7 +32,7 @@ public class View extends JPanel
 	public void paintComponent(Graphics g){
 		g.setColor(new Color(128, 255, 255));
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
-		for(int i = 0; i < 1; i++)
+		for(int i = 0; i < model.getWalls().size(); i++)
 		{
 			Wall wall = model.getWalls().get(i);
 			g.drawImage(wall_image, wall.getX(), wall.getY(), wall.getW(), wall.getH(), null);

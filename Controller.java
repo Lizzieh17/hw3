@@ -1,9 +1,10 @@
-/*
+/*e.getX(), e.getY(), e.getX(), e.getY()
  * Lizzie Howell
  * 2/12/2024
  * Assignment 3 - Map Editor
  */
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -13,13 +14,14 @@ import java.awt.event.ActionEvent;
 public class Controller implements ActionListener, MouseListener, KeyListener
 {
 	//private View view;
-	//private Model model;
-	//private boolean addWalls;
+	private Model model;
+	private int x,y; 
+	private boolean addWalls;
 
 	public Controller(Model m)
 	{
-		//model = m;
-		//addWalls = true;
+		model = m;
+		addWalls = true;
 	}
 
 	public void actionPerformed(ActionEvent e)
@@ -33,14 +35,27 @@ public class Controller implements ActionListener, MouseListener, KeyListener
 	public void mousePressed(MouseEvent e)
 	{
 		//model.startWalls(e.getX(), e.getY());
+		
+		if (addWalls){
+			x = e.getX();
+			y = e.getY();
+		}
 	}
 
 	public void mouseReleased(MouseEvent e) { 
 		//model.stopWalls(e.getX(), e.getY());
+		
+		//add wall
+		if(addWalls){
+			Wall wall = new Wall(x, y, (e.getX()- x), (e.getY() - y));
+			model.getWalls().add(wall);
+		}
 	}
 	public void mouseEntered(MouseEvent e) {    }
 	public void mouseExited(MouseEvent e) {    }
-	public void mouseClicked(MouseEvent e) {    }
+	
+	public void mouseClicked(MouseEvent e) {  
+	}
 
 	public void keyPressed(KeyEvent e)
 	{
@@ -62,6 +77,10 @@ public class Controller implements ActionListener, MouseListener, KeyListener
 			// Json mapload = model.load("map.json");
 			// mapsave.unmarshal(mapload);
 			System.out.println("Your map have been loaded.");
+		}
+		if(key == 'a' || key == 'r'){
+			//addWalls = !addWalls;
+			System.out.println("add walls");
 		}
 		if(key == 'a' || key == 'r'){
 			//addWalls = !addWalls;
