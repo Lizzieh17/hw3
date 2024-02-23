@@ -4,7 +4,6 @@
  * Assignment 3 - Map Editor
  */
 import javax.swing.JPanel;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -14,7 +13,6 @@ import java.io.File;
 
 public class View extends JPanel
 {
-	// private JButton b1;
 	private BufferedImage wall_image;
 	private Model model;
 
@@ -34,9 +32,9 @@ public class View extends JPanel
 	public void paintComponent(Graphics g){
 		g.setColor(new Color(128, 255, 255));
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
-		for(int i = 0; i < 17; i++)
+		for(int i = 0; i < 1; i++)
 		{
-			Wall wall = model.walls.get(i);
+			Wall wall = model.getWalls().get(i);
 			g.drawImage(wall_image, wall.getX(), wall.getY(), wall.getW(), wall.getH(), null);
 		}	
 	}

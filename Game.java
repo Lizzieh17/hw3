@@ -1,7 +1,7 @@
 /*
  * Lizzie Howell
  * 2/12/2024
- * Assignment 2 - Turtle Wars!
+ * Assignment  3- Map Editor
  */
 import javax.swing.JFrame;
 import java.awt.Toolkit;
@@ -23,7 +23,7 @@ public class Game extends JFrame
 		this.getContentPane().add(view);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
-		view.addMouseListener(controller);
+		//view.addMouseListener(controller);
 		this.addKeyListener(controller);
 	}
 
