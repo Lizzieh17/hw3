@@ -9,21 +9,36 @@ import java.util.ArrayList;
 public class Model
 {
 	private ArrayList<Wall> walls;
+	private int begX, begY;
+	private View view;
 
 	public Model()
 	{
-		//Wall wall = new Wall(250, 300, 200, 100);
 		walls = new ArrayList<Wall>();
-		//walls.add(wall);
 	}
 
 	public ArrayList<Wall> getWalls(){
 		return walls;
 	}
 
-	public void hello()
+	public void startWalls(int x, int y)
 	{
-		System.out.println("Hello");
+		begX = x;
+		begY = y;
+		//System.out.println("Starting wall...");
+	}
+	public void stopWalls(int newX, int newY)
+	{
+		//System.out.println("Stoping wall...");
+		Wall wall = new Wall(begX, begY, (newX- begX), (newY - begY));
+		walls.add(wall);
+	}
+	public void clearWalls(){
+		System.out.println("Clearing wall...");
+		for(int i = 0; i < walls.size(); i++)
+		{
+			walls.remove(i);
+		}
 	}
 	// public void unmarshal(Json ob){
 

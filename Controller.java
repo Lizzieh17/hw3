@@ -1,9 +1,10 @@
-/*e.getX(), e.getY(), e.getX(), e.getY()
+/*
  * Lizzie Howell
  * 2/12/2024
  * Assignment 3 - Map Editor
  */
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
@@ -11,9 +12,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
 
-public class Controller implements ActionListener, MouseListener, KeyListener
+public class Controller implements ActionListener, MouseListener, KeyListener, MouseMotionListener
 {
-	//private View view;
+	private View view;
 	private Model model;
 	private int x,y; 
 	private boolean addWalls;
@@ -29,37 +30,27 @@ public class Controller implements ActionListener, MouseListener, KeyListener
 	}
 
 	void setView(View v){
-		//view = v;
+		view = v;
 	}
 
 	public void mousePressed(MouseEvent e)
 	{
-		//model.startWalls(e.getX(), e.getY());
-		
-		if (addWalls){
-			x = e.getX();
-			y = e.getY();
-		}
+		model.startWalls(e.getX(), e.getY());
 	}
 
 	public void mouseReleased(MouseEvent e) { 
-		//model.stopWalls(e.getX(), e.getY());
-		
-		//add wall
-		if(addWalls){
-			Wall wall = new Wall(x, y, (e.getX()- x), (e.getY() - y));
-			model.getWalls().add(wall);
-		}
+		model.stopWalls(e.getX(), e.getY());
 	}
 	public void mouseEntered(MouseEvent e) {    }
 	public void mouseExited(MouseEvent e) {    }
-	
-	public void mouseClicked(MouseEvent e) {  
-	}
+	public void mouseClicked(MouseEvent e) {  	}
+	public void mouseDragged(MouseEvent e) {	}
+	public void mouseMoved(MouseEvent e) { 	  }
 
 	public void keyPressed(KeyEvent e)
 	{
 		char key = Character.toLowerCase(e.getKeyChar());
+		//quit
 		if(key == 'q'){
 			System.exit(0);
 		}
@@ -68,23 +59,27 @@ public class Controller implements ActionListener, MouseListener, KeyListener
 	public void keyReleased(KeyEvent e)
 	{
 		char key = Character.toLowerCase(e.getKeyChar());
+		//save
 		if(key == 's'){
 			// Json mapsave = model.marshal();
 			// mapsave.save("map.json");
 			System.out.println("Your map have been saved.");
 		}
+		//load
 		if(key == 'l'){
 			// Json mapload = model.load("map.json");
 			// mapsave.unmarshal(mapload);
 			System.out.println("Your map have been loaded.");
 		}
+		//add walls or not
 		if(key == 'a' || key == 'r'){
 			//addWalls = !addWalls;
 			System.out.println("add walls");
 		}
-		if(key == 'a' || key == 'r'){
-			//addWalls = !addWalls;
-			System.out.println("Toggle edit mode");
+		//clear all walls
+		if(key == 'c'){
+			System.out.println("Cleared all walls.");
+			
 		}
 	}
 

@@ -36,6 +36,6 @@ public class View extends JPanel
 		{
 			Wall wall = model.getWalls().get(i);
 			g.drawImage(wall_image, wall.getX(), wall.getY(), wall.getW(), wall.getH(), null);
-		}	
+		}
 	}
 }
