@@ -1,6 +1,6 @@
 /*
  * Lizzie Howell
- * 2/12/2024
+ * 2/25/2024
  * Assignment  3- Map Editor
  */
 import javax.swing.JFrame;
@@ -25,6 +25,7 @@ public class Game extends JFrame
 		this.setVisible(true);
 		view.addMouseListener(controller);
 		this.addKeyListener(controller);
+		controller.setView(view);
 	}
 
 	public static void main(String[] args)
@@ -34,6 +35,8 @@ public class Game extends JFrame
 	}
 
 	public void run(){
+		//show controls
+		System.out.println("'c' to remove all walls\n'a' to add walls\n'e' to enter editmode\n's' to save map\n'l' to load map\n'q' to quit");
 		while(true){
 			controller.update();
 			//model.update();

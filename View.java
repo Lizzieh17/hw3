@@ -1,6 +1,6 @@
 /*
  * Lizzie Howell
- * 2/21/2024
+ * 2/25/2024
  * Assignment 3 - Map Editor
  */
 import javax.swing.JPanel;
@@ -15,6 +15,7 @@ public class View extends JPanel
 {
 	private BufferedImage wall_image;
 	private Model model;
+	private int scrollY;
 
 	public View(Controller c, Model m)
 	{
@@ -35,7 +36,13 @@ public class View extends JPanel
 		for(int i = 0; i < model.getWalls().size(); i++)
 		{
 			Wall wall = model.getWalls().get(i);
-			g.drawImage(wall_image, wall.getX(), wall.getY(), wall.getW(), wall.getH(), null);
+			g.drawImage(wall_image, wall.getX(), (wall.getY() - scrollY), wall.getW(), wall.getH(), null);
 		}
+	}
+	public void cameraUp(){
+		scrollY += - 5;
+	}
+	public void cameraDown(){
+		scrollY += 5;
 	}
 }
