@@ -36,7 +36,7 @@ public class Game extends JFrame
 
 	public void run(){
 		//show controls
-		System.out.println("'c' or 'C' to remove all walls\n'a' or 'A' to add walls\n'e' or 'E' to enter editmode\n's' or 'S' to save map\n'l' or 'L' to load map\n'q','Q', or 'ESC' to quit");
+		System.out.println("'c' or 'C' to remove all walls\n'a' or 'A' to add walls\n'e' or 'E' to enter edit mode\n's' or 'S' to save map\n'l' or 'L' to load map\n'q','Q', or 'ESC' to quit");
 		while(true){
 			controller.update();
 			view.repaint(); // This will indirectly call View.paintComponent
