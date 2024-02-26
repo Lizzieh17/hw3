@@ -1,17 +1,16 @@
 /*
  * Lizzie Howell
- * 2/12/2024
+ * 2/25/2024
  * Assignment 3 - Map Editor
  */
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
 
-public class Controller implements ActionListener, MouseListener, KeyListener, MouseMotionListener
+public class Controller implements ActionListener, MouseListener, KeyListener
 {
 	private View view;
 	private Model model;
@@ -56,14 +55,13 @@ public class Controller implements ActionListener, MouseListener, KeyListener, M
 	public void mouseEntered(MouseEvent e) {    }
 	public void mouseExited(MouseEvent e) {    }
 	public void mouseClicked(MouseEvent e) {  	}
-	public void mouseDragged(MouseEvent e) {	}
-	public void mouseMoved(MouseEvent e) { 	  }
 
 	public void keyPressed(KeyEvent e)
 	{
 		char key = Character.toLowerCase(e.getKeyChar());
+		int key2 = e.getKeyCode();
 		//quit
-		if(key == 'q'){
+		if(key == 'q' || key2 == KeyEvent.VK_ESCAPE){
 			System.exit(0);
 		}
 		//scroll view
@@ -79,7 +77,7 @@ public class Controller implements ActionListener, MouseListener, KeyListener, M
 
 		//save
 		if(key == 's'){
-			Json mapsave = model.marshal();
+			JSON mapsave = model.marshal();
 			mapsave.save("map.json");
 			System.out.println("Your map have been saved.");
 		}
@@ -87,7 +85,7 @@ public class Controller implements ActionListener, MouseListener, KeyListener, M
 		//load
 		if(key == 'l'){
 			// Json mapload = Json.newObject();
-			Json mapload = Json.load("map.json");
+			JSON mapload = JSON.load("map.json");
 			model.unmarshal(mapload);
 			System.out.println("Your map have been loaded.");
 		}
@@ -110,19 +108,8 @@ public class Controller implements ActionListener, MouseListener, KeyListener, M
 
 		//clear all walls
 		if(key == 'c'){
-			//print list of walls 
-			int size = model.getWalls().size();
-			if (size > 0) {
-				// System.out.println(size);
-				// for(int i = 0; i < size; i++){ 
-				// 	Wall wall = model.getWalls().get(i);
-				// 	wall.print(i);
-				// }
-				for(int i = model.getWalls().size() - 1; i >= 0; i--){ 
-					Wall wall = model.getWalls().get(i);
-					wall.print(i);
-					model.getWalls().remove(wall);
-				}
+			if (model.getWalls().size() > 0) {
+				model.clearWalls();
 				System.out.println("Cleared all walls.");
 			}
 			else {
@@ -133,6 +120,5 @@ public class Controller implements ActionListener, MouseListener, KeyListener, M
 
 	public void keyTyped(KeyEvent e){	}
 
-	public void update(){	
-	}
+	public void update(){	}
 }

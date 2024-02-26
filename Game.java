@@ -18,7 +18,7 @@ public class Game extends JFrame
 		controller = new Controller(model);
 		view = new View(controller, model);
 		this.setTitle("Map Editor");
-		this.setSize(500, 500);
+		this.setSize(750, 750);
 		this.setFocusable(true);
 		this.getContentPane().add(view);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -36,10 +36,9 @@ public class Game extends JFrame
 
 	public void run(){
 		//show controls
-		System.out.println("'c' to remove all walls\n'a' to add walls\n'e' to enter editmode\n's' to save map\n'l' to load map\n'q' to quit");
+		System.out.println("'c' or 'C' to remove all walls\n'a' or 'A' to add walls\n'e' or 'E' to enter editmode\n's' or 'S' to save map\n'l' or 'L' to load map\n'q','Q', or 'ESC' to quit");
 		while(true){
 			controller.update();
-			//model.update();
 			view.repaint(); // This will indirectly call View.paintComponent
 			Toolkit.getDefaultToolkit().sync(); // Updates screen
 

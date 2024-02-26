@@ -3,6 +3,12 @@
 // See http://creativecommons.org/publicdomain/zero/1.0/
 // ----------------------------------------------------------------
 
+/*
+ * Lizzie Howell
+ * 2/25/2024
+ * Assignment 3 - Map Editor
+ */
+
 import java.util.ArrayList;
 import java.lang.StringBuilder;
 import java.io.BufferedWriter;
@@ -51,21 +57,21 @@ import java.nio.file.Files;
 //     }
 // }
 //
-public abstract class Json
+public abstract class JSON
 {
 	abstract void write(StringBuilder sb);
 
-	public static Json newObject()
+	public static JSON newObject()
 	{
 		return new JObject();
 	}
 
-	public static Json newList()
+	public static JSON newList()
 	{
 		return new JList();
 	}
 
-	public static Json parseNode(StringParser p)
+	public static JSON parseNode(StringParser p)
 	{
 		p.skipWhitespace();
 		if(p.remaining() == 0)
@@ -103,12 +109,12 @@ public abstract class Json
 		return this.asList().size();
 	}
 
-	public Json get(String name)
+	public JSON get(String name)
 	{
 		return this.asObject().field(name);
 	}
 
-	public Json get(int index)
+	public JSON get(int index)
 	{
 		return this.asList().get(index);
 	}
@@ -153,54 +159,54 @@ public abstract class Json
 		return get(index).asString();
 	}
 
-	public void add(String name, Json val)
+	public void add(String name, JSON val)
 	{
 		this.asObject().add(name, val);
 	}
 
 	public void add(String name, boolean val)
 	{
-		this.asObject().add(name, new Json.JBool(val));
+		this.asObject().add(name, new JSON.JBool(val));
 	}
 
 	public void add(String name, long val)
 	{
-		this.asObject().add(name, new Json.JLong(val));
+		this.asObject().add(name, new JSON.JLong(val));
 	}
 
 	public void add(String name, double val)
 	{
-		this.asObject().add(name, new Json.JDouble(val));
+		this.asObject().add(name, new JSON.JDouble(val));
 	}
 
 	public void add(String name, String val)
 	{
-		this.asObject().add(name, new Json.JString(val));
+		this.asObject().add(name, new JSON.JString(val));
 	}
 
-	public void add(Json item)
+	public void add(JSON item)
 	{
 		this.asList().add(item);
 	}
 
 	public void add(boolean val)
 	{
-		this.asList().add(new Json.JBool(val));
+		this.asList().add(new JSON.JBool(val));
 	}
 
 	public void add(long val)
 	{
-		this.asList().add(new Json.JLong(val));
+		this.asList().add(new JSON.JLong(val));
 	}
 
 	public void add(double val)
 	{
-		this.asList().add(new Json.JDouble(val));
+		this.asList().add(new JSON.JDouble(val));
 	}
 
 	public void add(String val)
 	{
-		this.asList().add(new Json.JString(val));
+		this.asList().add(new JSON.JString(val));
 	}
 
 	public boolean asBool()
@@ -257,13 +263,13 @@ public abstract class Json
 		}
 	}
 
-	public static Json parse(String s)
+	public static JSON parse(String s)
 	{
 		StringParser p = new StringParser(s);
-		return Json.parseNode(p);
+		return JSON.parseNode(p);
 	}
 
-	public static Json load(String filename)
+	public static JSON load(String filename)
 	{
 		String contents;
 		try
@@ -385,9 +391,9 @@ public abstract class Json
 	private static class NameVal
 	{
 		String name;
-		Json value;
+		JSON value;
 
-		NameVal(String nam, Json val)
+		NameVal(String nam, JSON val)
 		{
 			if(nam == null)
 				throw new IllegalArgumentException("The name cannot be null");
@@ -398,7 +404,7 @@ public abstract class Json
 		}
 	}
 
-	private static class JObject extends Json
+	private static class JObject extends JSON
 	{
 		ArrayList<NameVal> fields;
 
@@ -407,12 +413,12 @@ public abstract class Json
 			fields = new ArrayList<NameVal>();
 		}
 
-		public void add(String name, Json val)
+		public void add(String name, JSON val)
 		{
 			fields.add(new NameVal(name, val));
 		}
 
-		Json fieldIfExists(String name)
+		JSON fieldIfExists(String name)
 		{
 			for(NameVal nv : fields)
 			{
@@ -422,9 +428,9 @@ public abstract class Json
 			return null;
 		}
 
-		Json field(String name)
+		JSON field(String name)
 		{
-			Json n = fieldIfExists(name);
+			JSON n = fieldIfExists(name);
 			if(n == null)
 				throw new RuntimeException("No field named \"" + name + "\" found.");
 			return n;
@@ -477,7 +483,7 @@ public abstract class Json
 					String name = JString.parseString(p);
 					p.skipWhitespace();
 					p.expect(":");
-					Json value = Json.parseNode(p);
+					JSON value = JSON.parseNode(p);
 					newOb.add(name, value);
 					readyForField = false;
 				}
@@ -488,16 +494,16 @@ public abstract class Json
 		}
 	}
 
-	private static class JList extends Json
+	private static class JList extends JSON
 	{
-		ArrayList<Json> list;
+		ArrayList<JSON> list;
 
 		JList()
 		{
-			list = new ArrayList<Json>();
+			list = new ArrayList<JSON>();
 		}
 
-		public void add(Json item)
+		public void add(JSON item)
 		{
 			if(item == null)
 				item = new JNull();
@@ -509,7 +515,7 @@ public abstract class Json
 			return list.size();
 		}
 
-		public Json get(int index)
+		public JSON get(int index)
 		{
 			return list.get(index);
 		}
@@ -551,7 +557,7 @@ public abstract class Json
 				{
 					if(!readyForValue)
 						throw new RuntimeException("Expected a ',' or ']' in JSON file");
-					newList.list.add(Json.parseNode(p));
+					newList.list.add(JSON.parseNode(p));
 					readyForValue = false;
 				}
 			}
@@ -559,7 +565,7 @@ public abstract class Json
 		}
 	}
 
-	private static class JBool extends Json
+	private static class JBool extends JSON
 	{
 		boolean value;
 
@@ -574,7 +580,7 @@ public abstract class Json
 		}
 	}
 
-	private static class JLong extends Json
+	private static class JLong extends JSON
 	{
 		long value;
 
@@ -589,7 +595,7 @@ public abstract class Json
 		}
 	}
 
-	private static class JDouble extends Json
+	private static class JDouble extends JSON
 	{
 		double value;
 
@@ -603,7 +609,7 @@ public abstract class Json
 			sb.append(value);
 		}
 
-		static Json parseNumber(StringParser p)
+		static JSON parseNumber(StringParser p)
 		{
 			String s = p.whileReal();
 			if(s.indexOf('.') >= 0)
@@ -613,7 +619,7 @@ public abstract class Json
 		}
 	}
 
-	private static class JString extends Json
+	private static class JString extends JSON
 	{
 		String value;
 
@@ -697,7 +703,7 @@ public abstract class Json
 		}
 	}
 
-	private static class JNull extends Json
+	private static class JNull extends JSON
 	{
 		JNull()
 		{

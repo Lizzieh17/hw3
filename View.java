@@ -22,7 +22,7 @@ public class View extends JPanel
 		model = m;
 		c.setView(this);
 		try {
-			this.wall_image = ImageIO.read(new File("walls/wall.png"));
+			this.wall_image = ImageIO.read(new File("wall.png"));
 		}
 		catch(Exception e){
 			e.printStackTrace(System.err);
@@ -39,9 +39,11 @@ public class View extends JPanel
 			g.drawImage(wall_image, wall.getX(), (wall.getY() - scrollY), wall.getW(), wall.getH(), null);
 		}
 	}
+
 	public void cameraUp(){
 		scrollY += - 5;
 	}
+	
 	public void cameraDown(){
 		scrollY += 5;
 	}
